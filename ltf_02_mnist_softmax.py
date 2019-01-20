@@ -44,6 +44,8 @@ with tf.Session() as sess:
 
     # Run Gradient Descent with NUM_STEPS (1000) steps
     # MINIBATCH_SIZE = number of examples per step
+    # _ is used to ignore a returned value - we merely run the loop,
+    # we do not need the loop index.
     for _ in range(NUM_STEPS):
         batch_xs, batch_ys = data.train.next_batch(MINIBATCH_SIZE)
         # Placeholders are filled via feed_dict argument of sess.run():
