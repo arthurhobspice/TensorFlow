@@ -5,6 +5,7 @@ from datetime import datetime
 
 def weight_variable(shape):
     # Initialise weights with normal distribution
+    # GradientDescentOptimizer sometimes works better with non-zero initial weights.
     initial = tf.truncated_normal(shape,stddev=0.1)
     return tf.Variable(initial)
 

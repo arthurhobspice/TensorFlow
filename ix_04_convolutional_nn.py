@@ -86,6 +86,8 @@ with tf.name_scope('modelc'):
 with tf.name_scope('train'):
     y_ = tf.placeholder(tf.float32, [None, 10])
     cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=y_, logits=y_conv))
+    # Adam Optimizer: see Kingma and Ba, https://arxiv.org/abs/1412.6980
+    # Adam: algorithm for first-order gradient-based optimization of stochastic objective functions
     train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 
 with tf.name_scope('eval'):
