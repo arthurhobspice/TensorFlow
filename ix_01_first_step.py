@@ -19,7 +19,7 @@ with tf.Session() as session:
     # Start tensorboard like this: tensorboard --logdir=./first_step (Windows Firewall must be opened)
     # Seems like tensorboard has problems starting when python executable is installed under
     # C:\Program Files (or any other directory whose name contains spaces).
-    writer = tf.summary.FileWriter('tensorboard/first_step', session.graph)
+    writer = tf.summary.FileWriter('tensorboard/ix_01_first_step/', session.graph)
     init = tf.global_variables_initializer()
     session.run(init)
     print(session.run(node_sub, {a:2.0, b:1.0}))

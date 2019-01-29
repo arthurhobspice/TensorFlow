@@ -2,8 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import xlrd
+from datetime import datetime
 
 DATA_FILE = 'input/prices.xls'
+# Create a separate log directory for every run (with timestamp)
+# Tensorboard will automatically load all runs, user can filter them.
+now = datetime.now()
+GRAPH_LOG_FILE = 'tensorboard/ix_02_linear_reg/'+now.strftime("%Y%m%d-%H%M%S")+"/"
+
 
 # Read data (Excel reader)
 def read_data(filename):
@@ -12,6 +18,7 @@ def read_data(filename):
     x_data = np.asarray([sheet.cell(i, 1).value for i in range(1, sheet.nrows)])
     y_data = np.asarray([sheet.cell(i, 2).value for i in range(1, sheet.nrows)])
     return x_data, y_data
+
 
 x_data, y_data = read_data(DATA_FILE)
 
@@ -23,8 +30,8 @@ plt.show()
 # Define model
 # name_scope('model') summarises all aspects of model under this name.
 with tf.name_scope('model'):
-    W = tf.Variable([0.0], name='Weights')
-    b = tf.Variable([0.0], name='biases')
+    W = tf.Variable([2.5], name='Weights')
+    b = tf.Variable([1.0], name='biases')
     y = W * x_data + b
 
 # Training graph
@@ -34,14 +41,14 @@ with tf.name_scope('train'):
     # Contents of variable loss shall be written to the graph log, name "loss":
     tf.summary.scalar('loss',loss)
     # Argument of GradientDescentOptimizer: step width = learning_rate
-    optimizer = tf.train.GradientDescentOptimizer(0.001)
+    optimizer = tf.train.GradientDescentOptimizer(0.0001)
     train = optimizer.minimize(loss)
 
 # Learn
 # Query current values of all observed variables in one operation:
 summary_op = tf.summary.merge_all()
 with tf.Session() as session:
-    writer = tf.summary.FileWriter('tensorboard/linear_log', session.graph)
+    writer = tf.summary.FileWriter(GRAPH_LOG_FILE, session.graph)
     init = tf.global_variables_initializer()
     session.run(init)
 

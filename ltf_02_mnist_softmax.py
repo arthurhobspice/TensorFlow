@@ -21,6 +21,7 @@ y_true = tf.placeholder(tf.float32, [None, 10])
 y_pred = tf.matmul(x, W)
 
 # Cross entropy as measure for similarity (loss function)
+# softmax operations map lists/vectors of values to range [0..1].
 # Also in tf.losses.softmax_cross_entropy
 # softmax_cross_entropy_with_logits is deprecated, use v2 instead.
 cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(
